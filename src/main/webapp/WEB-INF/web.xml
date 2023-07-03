@@ -12,6 +12,16 @@
   <servlet>
   	<servlet-name>helloServlet</servlet-name>
   	<servlet-class>name.zkm.servlet.HelloServlet</servlet-class>
+  	<init-param>
+  		<param-name>param1</param-name>
+  		<param-value>value1</param-value>
+  	</init-param>
+  	<init-param>
+  		<description>This is param2</description>
+  		<param-name>param2</param-name>
+  		<param-value>value2</param-value>
+  	</init-param>
+  	
   	<!-- Tomcat启动时就创建Servlet -->
   	<load-on-startup>1</load-on-startup>
   </servlet>
