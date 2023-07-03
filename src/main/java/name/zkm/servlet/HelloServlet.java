@@ -7,9 +7,21 @@ import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-
+/**
+ * 最基本的Servlet。
+ * 1.创建一个雷，实现Servlet接口，重写必要的方法
+ * 2.在web.xml文件中进行配置。
+ * 3.在Tomcat中部署该Servlet，在浏览器中访问。
+ * 
+ * @author Administrator
+ *
+ */
 public class HelloServlet implements Servlet {
 
+	public HelloServlet() {
+		System.out.println("调用无参构造方法");
+	}
+	
 	@Override
 	public void destroy() {
 		System.out.println("destroy servlet");
