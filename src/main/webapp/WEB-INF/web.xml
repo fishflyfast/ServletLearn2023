@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>ServletLearn</display-name>
+  <context-param>
+  	<param-name>param1</param-name>
+  	<param-value>value1</param-value>
+  </context-param>
+  		
+    <context-param>
+	    <description>This is servlet context param</description>
+  		<param-name>param2</param-name>
+  		<param-value>value2</param-value>
+	</context-param>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.jsp</welcome-file>
@@ -12,21 +22,20 @@
   <servlet>
   	<servlet-name>helloServlet</servlet-name>
   	<servlet-class>name.zkm.servlet.HelloServlet</servlet-class>
-  	<init-param>
-  		<param-name>param1</param-name>
-  		<param-value>value1</param-value>
-  	</init-param>
-  	<init-param>
-  		<description>This is param2</description>
-  		<param-name>param2</param-name>
-  		<param-value>value2</param-value>
-  	</init-param>
-  	
-  	<!-- Tomcat启动时就创建Servlet -->
-  	<load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
   	<servlet-name>helloServlet</servlet-name>
   	<url-pattern>/hello</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>helloServlet2</servlet-name>
+  	<servlet-class>name.zkm.servlet.HelloServlet2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>helloServlet2</servlet-name>
+  	<url-pattern>/hello2</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

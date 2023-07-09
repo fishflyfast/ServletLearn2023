@@ -6,13 +6,13 @@ import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 /**
- * ServletConfig:Servlet的配置。
- * 1.Servlet的配置封装在ServletConfig中，这是个接口。封装后的对象会在init方法中传进来
- * 2.一般会在类中写一个私有变量，用来承接ServletConfig，以便后续使用。
+ * ServletContext:应用的全局配置,还有另一个名称：application。
+ * 1.在Web.xml中写入全局参数，各个Servlet中都能用
  * 
  * @author Administrator
  *
@@ -33,14 +33,12 @@ public class HelloServlet implements Servlet {
 
 	@Override
 	public ServletConfig getServletConfig() {
-		// TODO Auto-generated method stub
-		return null;
+		return config;
 	}
 
 	@Override
 	public String getServletInfo() {
-		// TODO Auto-generated method stub
-		return null;
+		return config.getServletName();
 	}
 
 	@Override
@@ -50,18 +48,25 @@ public class HelloServlet implements Servlet {
 		
 		System.out.println("servletName:" + config.getServletName());
 		System.out.println("servletContextPath:" + config.getServletContext().getContextPath());
-		Enumeration<String> en = config.getInitParameterNames();
+		
+		// 获取应用的参数
+		ServletContext application = config.getServletContext();
+		Enumeration<String> en = application.getInitParameterNames();
 		while(en.hasMoreElements()) {
 			String paramName = en.nextElement();
-			System.out.println("paramName:" + paramName + ",paramValue:" + config.getInitParameter(paramName));
+			System.out.println("app param name:" + paramName + ",paramValue:" + application.getInitParameter(paramName));
 		}
+		
+		System.out.println(application.getRealPath(getServletInfo()));
+		
 	}
 
 	@Override
 	public void service(ServletRequest arg0, ServletResponse arg1) throws ServletException, IOException {
 		System.out.println("service servlet" );
-		String paramValue = config.getInitParameter("param1");
-		System.out.println("paramName:param1, paramValue:" + paramValue);
+		ServletContext app = config.getServletContext();
+		app.setAttribute("att1", "this is setted by app");
+		app.setAttribute("att2", "this is setted by app too");
 
 	}
 
