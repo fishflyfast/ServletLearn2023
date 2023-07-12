@@ -1,72 +1,47 @@
 package name.zkm.servlet;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Map;
 
-import javax.servlet.Servlet;
+import javax.servlet.GenericServlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 /**
- * ServletContext:应用的全局配置,还有另一个名称：application。
- * 1.在Web.xml中写入全局参数，各个Servlet中都能用
+ * 通过继承GenericServlet类来写Servlet，该类使用了适配器模式
  * 
  * @author Administrator
  *
  */
-public class HelloServlet implements Servlet {
+public class HelloServlet extends GenericServlet {
 	
-	private ServletConfig config;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	public HelloServlet() {
 		System.out.println("调用无参构造方法");
 	}
 	
+	// 重写该方法做一些初始化干工作
+	// 父类的该方法初始化了ServletConfig
 	@Override
-	public void destroy() {
-		System.out.println("destroy servlet");
-
+	public void init() {
+		System.out.println("generic servlet init method called.");
 	}
-
-	@Override
-	public ServletConfig getServletConfig() {
-		return config;
-	}
-
-	@Override
-	public String getServletInfo() {
-		return config.getServletName();
-	}
-
-	@Override
-	public void init(ServletConfig arg0) throws ServletException {
-		System.out.println("init servlet");
-		this.config = arg0; // 接住ServletConfig
-		
-		System.out.println("servletName:" + config.getServletName());
-		System.out.println("servletContextPath:" + config.getServletContext().getContextPath());
-		
-		// 获取应用的参数
-		ServletContext application = config.getServletContext();
-		Enumeration<String> en = application.getInitParameterNames();
-		while(en.hasMoreElements()) {
-			String paramName = en.nextElement();
-			System.out.println("app param name:" + paramName + ",paramValue:" + application.getInitParameter(paramName));
-		}
-		
-		System.out.println(application.getRealPath(getServletInfo()));
-		
-	}
-
+	
 	@Override
 	public void service(ServletRequest arg0, ServletResponse arg1) throws ServletException, IOException {
-		System.out.println("service servlet" );
-		ServletContext app = config.getServletContext();
-		app.setAttribute("att1", "this is setted by app");
-		app.setAttribute("att2", "this is setted by app too");
+		System.out.println("genericServlet:service servlet" );
+		
+		// 调用父类的方法获取ServletConfig,ServletContext 
+		ServletConfig config = getServletConfig();
+		System.out.println(config.getServletName());
+		
+		ServletContext context = getServletContext();
+		System.out.println(context.getContextPath());
 
 	}
 
